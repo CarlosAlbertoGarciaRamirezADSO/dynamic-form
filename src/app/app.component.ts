@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ DinamicFormComponent, AsyncPipe],
+  imports: [DinamicFormComponent, AsyncPipe],
   providers: [QuestionService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -18,8 +18,9 @@ export class AppComponent {
   title = 'formulario_dinamico';
 
   questions$: Observable<QuestionBase<any>[]>;
-  
-  constructor(service: QuestionService) {
+
+  constructor(private service: QuestionService) {
+    
     this.questions$ = service.getQuestions();
     console.log(this.questions$);
     

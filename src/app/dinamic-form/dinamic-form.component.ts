@@ -29,4 +29,8 @@ export class DinamicFormComponent implements OnInit {
   onSubmit() {
     this.payLoad = JSON.stringify(this.form.getRawValue());
   }
+  onReset() {
+    this.form.reset();
+}
+
 }
