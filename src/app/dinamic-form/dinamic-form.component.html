@@ -1,13 +1,50 @@
 <div class="container">
-    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <!-- Form Progress Indicator -->
+    <div class="progress-container" *ngIf="questions && questions.length > 0">
+        <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="getFormProgress()"></div>
+        </div>
+        <div class="progress-text">
+            {{ getCompletedFields() }} de {{ getTotalFields() }} campos completados
+        </div>
+    </div>
 
-        <div *ngFor="let question of questions" class="form-rows">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form" class="dynamic-form" novalidate>
+        <div *ngFor="let question of questions; trackBy: trackByKey; let i = index" 
+             class="form-rows" 
+             [style.animation-delay.s]="i * 0.1">
             <app-dinamic-form-question [question]="question" [form]="form"></app-dinamic-form-question>
         </div>
 
-        <div class="form-row">
-            <button type="submit" [disabled]="!form.valid">Guardar</button>
-            <button type="button" (click)="onReset()" class="clear-btn">Limpiar</button>
+        <div class="form-actions">
+            <button type="button" 
+                    (click)="onReset()" 
+                    class="clear-btn"
+                    [attr.aria-label]="'Limpiar formulario'"
+                    title="Limpiar todos los campos">
+                <span class="btn-icon">🗑️</span>
+                <span class="btn-text">Limpiar</span>
+            </button>
+            
+            <button type="submit" 
+                    [disabled]="!form.valid"
+                    class="submit-btn"
+                    [attr.aria-label]="form.valid ? 'Enviar formulario' : 'Complete todos los campos requeridos'"
+                    [title]="form.valid ? 'Enviar formulario' : 'Complete todos los campos requeridos'">
+                <span class="btn-icon" *ngIf="!isSubmitting">📤</span>
+                <span class="btn-icon spinner" *ngIf="isSubmitting">⏳</span>
+                <span class="btn-text">{{ isSubmitting ? 'Enviando...' : 'Enviar Formulario' }}</span>
+            </button>
+        </div>
+
+        <!-- Form Summary for Screen Readers -->
+        <div class="sr-only" aria-live="polite">
+            Formulario {{ form.valid ? 'válido' : 'inválido' }}. 
+            {{ getCompletedFields() }} de {{ getTotalFields() }} campos completados.
         </div>
     </form>
+
+    <!-- Success/Error Messages -->
+        <!-- Success/Error notifications are shown globally in the top-right via NotificationService -->
+        <!-- Success/Error notifications are shown globally in the top-right via NotificationService -->
 </div>

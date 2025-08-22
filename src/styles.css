@@ -1,1 +1,140 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Styles - Modern Soft Design */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Minimal professional palette (soft neutrals + muted accent) */
+  --primary-gradient: linear-gradient(180deg, #f7fafc 0%, #f3f6f9 100%);
+  --accent: #0f766e; /* muted teal */
+  --muted: #6b7280; /* neutral gray */
+  --surface: #ffffff; /* card background */
+  --canvas: #f6f8fa; /* page background */
+
+  /* Glass / subtle */
+  --glass-bg: rgba(255,255,255,0.9);
+  --glass-border: rgba(15, 23, 42, 0.04);
+  --glass-shadow: rgba(15, 23, 42, 0.06);
+
+  /* Text colors */
+  --text-primary: #0f172a;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
+
+  /* Status colors */
+  --success: #16a34a;
+  --error: #dc2626;
+  --info: #0ea5ad;
+
+  /* Focus and hover */
+  --focus-color: rgba(15,118,110,0.14);
+  --hover-bg: rgba(15,118,110,0.06);
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: linear-gradient(180deg, var(--canvas) 0%, #eef3f6 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  line-height: 1.5;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glass morphism backdrop */
+.glass-backdrop {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 24px var(--glass-shadow);
+}
+
+/* Custom scrollbar - Softer colors */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Animation keyframes */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes breathe {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes gentleFloat {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  33% { 
+    transform: translateY(-10px) rotate(0.5deg); 
+  }
+  66% { 
+    transform: translateY(5px) rotate(-0.5deg); 
+  }
+}
+
+/* Improved focus styles for accessibility */
+*:focus {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+}
+
+/* Selection colors */
+::selection {
+  background: rgba(147, 197, 253, 0.3);
+  color: var(--text-primary);
+}

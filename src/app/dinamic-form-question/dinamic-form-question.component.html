@@ -1,31 +1,54 @@
-    <div [formGroup]="form" class="form-group">
-        <label [attr.for]="question.key" class="form-label">
-            {{ question.label }}
-        </label>
+<div [formGroup]="form" class="form-group">
+    <label [attr.for]="question.key" class="form-label">
+        {{ question.label }}
+    </label>
 
-        <div [ngSwitch]="question.controlType">
-            <input *ngSwitchCase="'textbox'" 
-                [formControlName]="question.key"
-                [id]="question.key" 
-                [type]="question.type"
-                [min]="question.type === 'Date' || question.type === 'date' ? today : null"
-                class="form-input"
-                (keypress)="solo_letras($event)">
+    <div [ngSwitch]="question.controlType">
+        <!-- Text Input -->
+        <input *ngSwitchCase="'textbox'" 
+            [formControlName]="question.key"
+            [id]="question.key" 
+            [type]="question.type"
+            [min]="question.type === 'Date' || question.type === 'date' ? today : null"
+            [placeholder]="getPlaceholder(question)"
+            class="form-input"
+            [class.ng-invalid]="!isValid && form.controls[question.key].touched"
+            [class.ng-valid]="isValid && form.controls[question.key].touched"
+            (keypress)="validateInput($event, question.type)"
+            (blur)="onFieldBlur(question.key)"
+            (input)="onFieldInput(question.key, $event)">
 
-
-            <div *ngSwitchCase="'radio'">
-                <div *ngFor="let option of question.options">
-                    <label>
-                        <input type="radio" 
-                            [formControlName]="question.key" 
-                            [value]="option.key">
-                        {{ option.value }}
-                    </label>
-                </div>
+        <!-- Radio Button Group -->
+        <div *ngSwitchCase="'radio'" class="radio-group">
+            <div *ngFor="let option of question.options" class="radio-option">
+                <input type="radio" 
+                    [formControlName]="question.key" 
+                    [id]="question.key + '_' + option.key"
+                    [value]="option.key"
+                    (change)="onFieldChange(question.key)">
+                <label [for]="question.key + '_' + option.key">
+                    {{ option.value }}
+                </label>
             </div>
         </div>
+
+        <!-- File Input -->
+        <input *ngSwitchCase="'file'"
+            type="file"
+            [formControlName]="question.key"
+            [id]="question.key"
+            class="form-input"
+            [class.ng-invalid]="!isValid && form.controls[question.key].touched"
+            [class.ng-valid]="isValid && form.controls[question.key].touched"
+            (change)="onFileChange($event)"
+            [accept]="getAcceptedFileTypes(question)">
     </div>
-    <div *ngIf="!isValid" class="error-message">
-        {{ question.label }} es obligatorio.
+
+    <!-- Help Text -->
+    <div *ngIf="question.helpText" class="help-text">
+        {{ question.helpText }}
     </div>
+
+    <!-- Errors are shown via NotificationService (global toasts) -->
+</div>
 

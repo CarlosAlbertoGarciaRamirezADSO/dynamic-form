@@ -1,55 +1,213 @@
-/* Centrar el formulario */
+/* Soft Glass Form Group Container */
 .form-group {
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem;
+    position: relative;
+    animation: slideInUp 0.35s ease-out;
 }
 
-/* Etiqueta de los campos */
+/* Modern Form Labels with better contrast */
 .form-label {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #333;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
     margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+}
+.form-label.required::after { content: ' *'; color: var(--error); font-weight: 700; margin-left: 6px; }
+
+/* Help Text - Better visibility */
+.help-text {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
 }
 
-/* Campos de entrada */
+/* Professional Glass Input Fields */
 .form-input {
     width: 100%;
-    padding: 12px;
-    border: 2px solid #ccc;
+    padding: 10px 12px;
+    background: var(--surface);
+    border: 1px solid var(--glass-border);
     border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-primary);
+    transition: all 0.16s ease;
 }
 
-/* Estilo al hacer foco */
+.form-input::placeholder { color: var(--text-muted); opacity: 0.9; }
+
+/* Focus State - Softer blue focus */
 .form-input:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 6px 18px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.02);
 }
 
-/* Mensaje de error */
-.error-message {
-    color: red;
-    font-size: 0.875rem;
-    margin-top: 5px;
+/* Valid State - Gentle green */
+.form-input.ng-valid.ng-touched:not(:focus) { border-color: rgba(16,185,129,0.18); }
+
+/* Invalid State - Gentle coral */
+.form-input.ng-invalid.ng-touched:not(:focus) { border-color: rgba(220,38,38,0.12); }
+
+@keyframes gentleShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
 }
 
-/* Botón de envío (opcional) */
-.form-button {
-    background-color: #007bff;
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+/* Soft Radio Button Group */
+.radio-group { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+
+.radio-option { display: flex; align-items: center; padding: 10px 12px; background: transparent; border: 1px solid var(--glass-border); border-radius: 8px; }
+
+.radio-option:hover { background: var(--hover-bg); transform: translateY(-2px); }
+
+.radio-option input[type="radio"] { appearance: none; width: 18px; height: 18px; border: 2px solid rgba(15,23,42,0.08); border-radius: 50%; margin-right: 12px; background: #fff; }
+
+.radio-option input[type="radio"]:checked { border-color: var(--accent); background: linear-gradient(90deg, rgba(15,118,110,0.06), rgba(14,165,173,0.06)); box-shadow: 0 6px 12px rgba(15,23,42,0.04); }
+
+.radio-option input[type="radio"]:checked::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+
+.radio-option label { color: var(--text-secondary); font-weight: 500; cursor: pointer; flex: 1; margin: 0; line-height: 1.3; }
+
+/* Error Messages - Softer coral */
+.error-message { display: none; }
+
+@keyframes fadeInError {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Success Messages - Gentle green */
+.success-message { display: none; }
+
+/* File Input Specific Styles */
+.form-input[type="file"] {
+    padding: 10px 12px;
     cursor: pointer;
-    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+    border-style: dashed;
+    border-width: 2px;
 }
 
-.form-button:hover {
-    background-color: #0056b3;
+.form-input[type="file"]::-webkit-file-upload-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 8px 16px;
+    margin-right: 12px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.form-input[type="file"]::-webkit-file-upload-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.02);
+}
+
+.form-input[type="file"]:hover {
+    border-color: var(--focus-color);
+    background: rgba(255, 255, 255, 0.18);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .form-input {
+        padding: 14px 16px;
+        font-size: 16px; /* Prevents zoom on iOS */
+        border-radius: 12px;
+    }
+    
+    .radio-group {
+        gap: 10px;
+    }
+    
+    .radio-option {
+        padding: 12px 14px;
+        border-radius: 10px;
+    }
+
+    .help-text {
+        font-size: 0.75rem;
+    }
+
+    .form-label {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-input {
+        padding: 12px 14px;
+        font-size: 16px;
+    }
+    
+    .radio-option {
+        padding: 10px 12px;
+    }
+    
+    .radio-option input[type="radio"] {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .form-input {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .radio-option {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .form-input {
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .form-label, .help-text {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+    
+    .radio-option {
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .form-group,
+    .form-input,
+    .radio-option,
+    .error-message,
+    .success-message {
+        animation: none !important;
+        transition: opacity 0.2s ease !important;
+    }
+    
+    .form-input:focus,
+    .radio-option:hover {
+        transform: none;
+    }
 }
 
